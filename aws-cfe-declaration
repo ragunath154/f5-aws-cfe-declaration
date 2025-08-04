@@ -1,0 +1,56 @@
+{
+  "class": "Cloud_Failover",
+  "environment": "aws",
+  "controls": {
+    "class": "Controls",
+    "logLevel": "silly"
+  },
+  "externalStorage": {
+    "scopingName": "s3bucketname",
+    "encryption": {
+      "serverSide": {
+        "enabled": true,
+        "algorithm": "AES256"
+      }
+    }
+  },
+  "failoverAddresses": {
+    "enabled": true,
+    "scopingTags": {
+      "f5_cloud_failover_label": "bigip_high_availability_solution"
+    },
+    "addressGroupDefinitions": [
+      {
+        "type": "elasticIpAddress",
+        "scopingAddress": "1.1.1.1",
+        "vipAddresses": [
+          "10.10.10.101",
+          "10.20.20.101"
+        ]
+      }
+    ]
+  },
+  "failoverRoutes": {
+    "enabled": false,
+       "scopingTags": {
+     "f5_cloud_failover_label": "bigip_high_availability_solution"
+     },
+    "routeGroupDefinitions": [
+      {
+        "scopingName": "rtb-343434",
+        "scopingAddressRanges": [
+          {
+            "range": "0.0.0.0/0"
+          }
+        ],
+        "defaultNextHopAddresses": {
+          "discoveryType": "static",
+          "items": [
+            "10.10.200.11",
+            "10.11.200.11"
+          ]
+        }
+      }
+    ]
+  }
+}
