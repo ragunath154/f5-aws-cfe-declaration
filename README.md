@@ -39,4 +39,44 @@ f5_cloud_failover_lable: "bigip-deployment"
 f5_cloud_failover_vips: 10.10.10.12,10.20.20.12   ; this secondary IP attached to the bigip external interface
 
 ## step 8
+Note: FOR HA better use internal Selfip ,
+You need to create LOCAL Only Route for each devices own routes
+1. Create a parition as LOCAL_ONLY
+   remove the inherit,and set traffic-group none
 
+2. navigate to the LOCAL_ONLY partition
+   create the routes in each biigp, eg: default route, Static route between bigip, server segments
+   (as both bigip are in different AZ )
+for same zone no need of this step, check f5 offical document
+
+## step 9
+Post the CFE declaration 
+https://ip/mgmt/shared/cloud-failover/declare 
+
+after positing declaration on both device send a reset POST
+https://ip/mgmt/shared/cloud-failover/reset
+{"resetStateFile":true}
+
+for testin run the belwo get
+https://ip/mgmt/shared/cloud-failover/inspect
+
+dry run on standby device only
+/mgmt/shared/cloud-failover/trigger
+{"action":"dry-run"}
+
+tail -f /var/log/restnoded/restnoded.log
+
+
+Key note:
+if the Elastic IP attached to the Standby :
+POST The declration with some dummy Elstic IP, Make Active to standby 
+and then POST actual declration with correct Elastic IP
+
+Make sure
+internet access to below url/ip via external selfip
+curl http://169.254.169.254/latest/meta-data/
+curl -s -I  https://ec2.amazonaws.com
+
+also set DNS and NTP and access via external selip
+Cloud Provider	DNS	NTP
+AWS	169.254.169.253	169.254.169.123
