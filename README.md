@@ -80,3 +80,16 @@ curl -s -I  https://ec2.amazonaws.com
 also set DNS and NTP and access via external selip
 Cloud Provider	DNS	NTP
 AWS	169.254.169.253	169.254.169.123
+
+final touch
+In the BIG-IP user interface, navigate to System > Resource Provisioning. Set Management provisioning to Large.
+
+Modify sys db variables using following commands in the CLI (bash):
+
+tmsh modify sys db provision.extramb value 1000
+
+tmsh modify sys db restjavad.useextramb value true
+(check this command might changed provision.restjavad.extramb value 1000)
+Restart restjavad daemons:
+
+bigstart restart restjavad restnoded
