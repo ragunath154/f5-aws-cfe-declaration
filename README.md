@@ -18,7 +18,7 @@ f5_cloud_failover_nic_map:"external"
 ## Step 3:
 # For the Internal inteface add below tags
 f5_cloud_failover_lable: "bigip-deployment"
-f5_cloud_failover_nic_map:"external"
+f5_cloud_failover_nic_map:"internal"
 
 ## step 4 
 create a s3 bucket without any space and special characeter and below tag
