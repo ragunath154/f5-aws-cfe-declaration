@@ -4,7 +4,7 @@ cfe declaration for ha in AWS
 Step 1
 onboard BIGIP in aws with below tags
 
-cost:f5cost
+cost:f5cost<b>
 environment:f5env
 group:f5group
 owner:f5own
